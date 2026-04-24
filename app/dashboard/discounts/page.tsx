@@ -74,7 +74,7 @@ export default function DiscountsPage() {
         <p className="text-muted-foreground text-sm mt-1">Create codes to offer deals to your buyers</p>
       </div>
 
-      <CreateDiscountForm products={products} onCreated={fetchDiscounts} />
+      <CreateDiscountForm products={products} />
 
       {loading ? (
         <div className="flex items-center justify-center py-12">
