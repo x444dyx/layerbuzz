@@ -316,8 +316,8 @@ export function Pricing() {
 
             {/* Table rows */}
             {features.map((feature, i) => {
-              const ls = layerbuzzData[feature]
-              const comp = competitor.data[feature]
+              const ls = (layerbuzzData as any)[feature]
+              const comp = (competitor.data as any)[feature]
               return (
                 <div
                   key={feature}
