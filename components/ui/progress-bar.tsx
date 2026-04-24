@@ -28,6 +28,8 @@ export function ProgressBar() {
       if (!target) return
       const href = target.getAttribute('href')
       if (!href || href.startsWith('http') || href.startsWith('mailto') || href.startsWith('#')) return
+      const hrefPathname = href.split('?')[0]
+      if (hrefPathname === window.location.pathname) return
       if (completeTimer.current) clearTimeout(completeTimer.current)
       setState('loading')
     }
