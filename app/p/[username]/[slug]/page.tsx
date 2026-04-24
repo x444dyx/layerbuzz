@@ -6,7 +6,28 @@ import Link from 'next/link'
 import { Navbar } from '@/components/landing/navbar'
 import { Footer } from '@/components/landing/footer'
 import { BuyButton } from '@/components/store/buy-button'
-import { Star, ShoppingBag, FileIcon, Globe, Twitter } from 'lucide-react'
+import { Star, ShoppingBag, FileIcon, Globe } from 'lucide-react'
+
+const SOCIAL_URLS: Record<string, (val: string) => string> = {
+  twitter: (v) => `https://twitter.com/${v}`,
+  instagram: (v) => `https://instagram.com/${v}`,
+  tiktok: (v) => `https://tiktok.com/@${v}`,
+  youtube: (v) => v.startsWith('http') ? v : `https://youtube.com/${v}`,
+  linkedin: (v) => v.startsWith('http') ? v : `https://linkedin.com/in/${v}`,
+  facebook: (v) => v.startsWith('http') ? v : `https://facebook.com/${v}`,
+  twitch: (v) => `https://twitch.tv/${v}`,
+  discord: (v) => v.startsWith('http') ? v : `https://discord.gg/${v}`,
+  spotify: (v) => v.startsWith('http') ? v : `https://open.spotify.com/${v}`,
+  soundcloud: (v) => v.startsWith('http') ? v : `https://soundcloud.com/${v}`,
+  github: (v) => `https://github.com/${v}`,
+  threads: (v) => `https://threads.net/@${v}`,
+}
+
+const SOCIAL_LABELS: Record<string, string> = {
+  twitter: 'X', instagram: 'Instagram', tiktok: 'TikTok', youtube: 'YouTube',
+  linkedin: 'LinkedIn', facebook: 'Facebook', twitch: 'Twitch', discord: 'Discord',
+  spotify: 'Spotify', soundcloud: 'SoundCloud', github: 'GitHub', threads: 'Threads',
+}
 
 export const metadata = { title: 'Product' }
 
@@ -207,17 +228,23 @@ export default async function ProductPage({
                   </div>
                 </Link>
                 {seller.bio && <p className="text-xs text-muted-foreground mt-3 leading-relaxed">{seller.bio}</p>}
-                <div className="flex gap-3 mt-3">
+                <div className="flex flex-wrap gap-3 mt-3">
                   {seller.website && (
-                    <a href={seller.website} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                      <Globe className="w-4 h-4" />
+                    <a href={seller.website} target="_blank" rel="noopener noreferrer" className="text-xs text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1">
+                      <Globe className="w-3.5 h-3.5" /> Website
                     </a>
                   )}
-                  {seller.twitter && (
-                    <a href={`https://twitter.com/${seller.twitter}`} target="_blank" rel="noopener noreferrer" className="text-muted-foreground hover:text-foreground transition-colors">
-                      <Twitter className="w-4 h-4" />
+                  {(seller.social_links || []).filter((s: any) => s.value).map((s: any) => (
+                    <a
+                      key={s.platform}
+                      href={SOCIAL_URLS[s.platform]?.(s.value) || s.value}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-xs text-muted-foreground hover:text-foreground transition-colors"
+                    >
+                      {SOCIAL_LABELS[s.platform] || s.platform}
                     </a>
-                  )}
+                  ))}
                 </div>
               </div>
             </div>
