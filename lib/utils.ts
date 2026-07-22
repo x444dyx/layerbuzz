@@ -14,6 +14,9 @@ export function formatCurrency(amount: number, currency: string = 'gbp'): string
 }
 
 export function formatDate(date: string | Date): string {
+  if (!date) return "—";
+  const d = new Date(date);
+  if (isNaN(d.getTime())) return "Invalid date";
   return new Intl.DateTimeFormat('en-GB', {
     day: 'numeric',
     month: 'short',
