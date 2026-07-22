@@ -36,7 +36,7 @@ export default function DiscountsPage() {
   const handleAction = async (action: string, id: string, data?: any) => {
     setActionLoading(id + action)
     try {
-      const res = await fetch('/api/discounts/actions', {
+      const res = await fetch('/api/discount/actions', {
         method: 'POST',
         headers: { 'content-type': 'application/json' },
         body: JSON.stringify({ action, id, data }),
